@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -26,6 +26,10 @@ namespace arelith_portrait_maker
 
         private List<KeyValuePair<string, Bitmap>> crop_list = new List<KeyValuePair<string, Bitmap>>();
 
+        private string template_folder = @".\template";
+        private string output_folder   = @".\output";
+        private string output_prefix   = "zap_";
+
         public static class Portrait_Dimension
         {
             //width, height, negative value
@@ -39,6 +43,28 @@ namespace arelith_portrait_maker
 
         public Main()
         {
+            if(!Directory.Exists(template_folder))
+            {
+                MessageBox.Show("Couldn't find \""+template_folder.Replace(".\\", "")+"\" folder. Be sure to \""+template_folder.Replace(".\\", "")+"\" folder is located in the same directory with application.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Environment.Exit(1);
+
+                return;
+            }
+            else
+            {
+                if(!File.Exists(template_folder+@"\template_h.png") 
+                || !File.Exists(template_folder+@"\template_l.png")
+                || !File.Exists(template_folder+@"\template_m.png")
+                || !File.Exists(template_folder+@"\template_s.png")
+                || !File.Exists(template_folder+@"\template_t.png"))
+                {
+                    MessageBox.Show("Couldn't find template images. Be sure to \""+template_folder.Replace(".\\", "")+"\" folder contains the 5 template images.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Environment.Exit(1);
+
+                    return;
+                }
+            }
+
             InitializeComponent();
         }
 
@@ -253,14 +279,14 @@ namespace arelith_portrait_maker
         {
             resize_portrait_on_canvas(Portrait_Dimension.huge);
 
-            if(!Directory.Exists(@".\output")) Directory.CreateDirectory(@".\output");
+            if(!Directory.Exists(output_folder)) Directory.CreateDirectory(output_folder);
 
             string portrait_name = get_file_name(this.portrait_path);
 
             try
             {
                 //Huge portrait template
-                Bitmap template_h = new Bitmap(@".\template\template_h.png");
+                Bitmap template_h = new Bitmap(template_folder+@"\template_h.png");
 
                 using (Graphics g = Graphics.FromImage(template_h))
                 {
@@ -272,7 +298,7 @@ namespace arelith_portrait_maker
                 }
 
                 //Large portrait template
-                Bitmap template_l = new Bitmap(@".\template\template_l.png");
+                Bitmap template_l = new Bitmap(template_folder+@"\template_l.png");
 
                 using (Graphics g = Graphics.FromImage(template_l))
                 {
@@ -299,7 +325,7 @@ namespace arelith_portrait_maker
                 }
 
                 //Medium portrait template
-                Bitmap template_m = new Bitmap(@".\template\template_m.png");
+                Bitmap template_m = new Bitmap(template_folder+@"\template_m.png");
 
                 using (Graphics g = Graphics.FromImage(template_m))
                 {
@@ -326,7 +352,7 @@ namespace arelith_portrait_maker
                 }
 
                 //Small portrait template
-                Bitmap template_s = new Bitmap(@".\template\template_s.png");
+                Bitmap template_s = new Bitmap(template_folder+@"\template_s.png");
 
                 using (Graphics g = Graphics.FromImage(template_s))
                 {
@@ -353,7 +379,7 @@ namespace arelith_portrait_maker
                 }
 
                 //Tiny portrait template
-                Bitmap template_t = new Bitmap(@".\template\template_t.png");
+                Bitmap template_t = new Bitmap(template_folder+@"\template_t.png");
 
                 using (Graphics g = Graphics.FromImage(template_t))
                 {
@@ -379,23 +405,23 @@ namespace arelith_portrait_maker
                     }
                 }
 
-                template_h.Save(@".\output\zap_" + portrait_name + "_h.png", ImageFormat.Png);
-                template_l.Save(@".\output\zap_" + portrait_name + "_l.png", ImageFormat.Png);
-                template_m.Save(@".\output\zap_" + portrait_name + "_m.png", ImageFormat.Png);
-                template_s.Save(@".\output\zap_" + portrait_name + "_s.png", ImageFormat.Png);
-                template_t.Save(@".\output\zap_" + portrait_name + "_t.png", ImageFormat.Png);
+                template_h.Save(output_folder+@"\" + output_prefix + portrait_name + "_h.png", ImageFormat.Png);
+                template_l.Save(output_folder+@"\" + output_prefix + portrait_name + "_l.png", ImageFormat.Png);
+                template_m.Save(output_folder+@"\" + output_prefix + portrait_name + "_m.png", ImageFormat.Png);
+                template_s.Save(output_folder+@"\" + output_prefix + portrait_name + "_s.png", ImageFormat.Png);
+                template_t.Save(output_folder+@"\" + output_prefix + portrait_name + "_t.png", ImageFormat.Png);
 
                 clear_all_buttons();
 
-                MessageBox.Show("Portraits are successfully generated. Please check \"output\" folder.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Portraits are successfully generated. Please check \""+output_folder.Replace(".\\", "")+"\" folder.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                Process.Start(@".\output");
+                Process.Start(output_folder);
 
                 return;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occured while generating portraits. ("+ex.Message+")", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("An error occured while generating portraits. (Exception: "+ex.Message+")", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             clear_all_buttons();
