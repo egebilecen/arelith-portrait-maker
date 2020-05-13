@@ -176,7 +176,7 @@ namespace arelith_portrait_maker
         private void clear_all_buttons()
         {
             this.picbox.Image = null;
-            this.btn_fit_portrait.Enabled   = false;
+            this.btn_fit_portrait.Enabled = false;
             this.btn_generate.Enabled = false;
             this.btn_end_crop.Visible = false;
 
@@ -269,7 +269,8 @@ namespace arelith_portrait_maker
 
             show_crop_section();
 
-            this.btn_generate.Enabled = true;
+            this.btn_fit_portrait.Enabled = false;
+            this.btn_generate.Enabled     = true;
         }
 
         private void btn_generate_Click(object sender, EventArgs e)
