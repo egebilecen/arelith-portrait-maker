@@ -211,6 +211,9 @@ namespace arelith_portrait_maker
             this.btn_end_crop.Visible = false;
 
             hide_scale_section();
+
+            this.lbl_scale_val.Text = "0.0";
+            this.slider_scale.Value = 0;
         }
 
         private void btn_load_img_Click(object sender, EventArgs e)
@@ -573,6 +576,8 @@ namespace arelith_portrait_maker
 
                 add_bitmap_to_crop_list(this.crop_area_str, cropped_area);
             }
+
+            free_bitmap(ref this.canvas_scaled);
 
             this.canvas = (Bitmap) this.original_image.Clone();
             
