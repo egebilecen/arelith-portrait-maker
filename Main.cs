@@ -20,9 +20,9 @@ namespace arelith_portrait_maker
         private Color  crop_border_color = Color.FromArgb(254, 254, 254);
 
         private string portrait_path;
-        private Bitmap canvas;
-        private Bitmap canvas_backup;
-        private Bitmap canvas_scaled = null;
+        private Bitmap original_image; // will always hold original RESIZED image
+        private Bitmap canvas; // any changes will happen on this canvas
+        private Bitmap canvas_scaled = null; // will hold scaled image
 
         private List<KeyValuePair<string, Bitmap>> crop_list = new List<KeyValuePair<string, Bitmap>>();
 
@@ -143,54 +143,6 @@ namespace arelith_portrait_maker
             return false;
         }
 
-        private void resize_portrait_on_canvas(int[] dimensions)
-        {
-            this.canvas = ResizeImage(this.canvas, dimensions[0], dimensions[1]);
-            this.picbox.Image = this.canvas;
-        }
-
-        private void btn_load_img_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog file_dialog = new OpenFileDialog();
-
-            file_dialog.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
-            file_dialog.Title = "Please select a portrait";
-
-            if(file_dialog.ShowDialog() == DialogResult.OK)
-            {
-                if(file_dialog.FileName != String.Empty)
-                {
-                    this.portrait_path = file_dialog.FileName;
-                    this.canvas        = new Bitmap(portrait_path);
-
-                    /*if(canvas.Width < Portrait_Dimension.huge[0])
-                    {
-                        MessageBox.Show("Selected portrait's width must be at least "+Portrait_Dimension.huge[0].ToString()+"px!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;    
-                    }
-                    else if(canvas.Height < Portrait_Dimension.huge[1])
-                    {
-                        MessageBox.Show("Selected portrait's height must be at least "+Portrait_Dimension.huge[1].ToString()+"px!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }*/
-
-                    // Remove transparency
-                    this.canvas_backup = (Bitmap) this.canvas.Clone();
-
-                    using (Graphics g = Graphics.FromImage(this.canvas))
-                    {
-                        g.Clear(Color.White);
-                        g.DrawImage(this.canvas_backup, 0, 0);
-                    }
-
-                    clear_all_buttons();
-
-                    this.picbox.Image       = this.canvas;
-                    this.btn_resize.Enabled = true;
-                }
-            }
-        }
-
         private void show_crop_section()
         {
             this.btn_crop_l.Visible = true;
@@ -224,7 +176,7 @@ namespace arelith_portrait_maker
         private void clear_all_buttons()
         {
             this.picbox.Image = null;
-            this.btn_resize.Enabled   = false;
+            this.btn_fit_portrait.Enabled   = false;
             this.btn_generate.Enabled = false;
             this.btn_end_crop.Visible = false;
 
@@ -244,32 +196,74 @@ namespace arelith_portrait_maker
         private void event_clipping_begin()
         {
             this.btn_load_img.Enabled = false;
-            this.btn_resize.Enabled   = false;
+            this.btn_fit_portrait.Enabled   = false;
             this.btn_generate.Enabled = false;
             this.btn_end_crop.Visible = true;
 
             show_scale_section();
-
-            this.canvas_backup = (Bitmap) this.canvas.Clone();
         }
 
         private void event_clipping_end()
         {
             this.btn_load_img.Enabled = true;
-            this.btn_resize.Enabled   = true;
+            this.btn_fit_portrait.Enabled   = true;
             this.btn_generate.Enabled = true;
             this.btn_end_crop.Visible = false;
 
             hide_scale_section();
-            
-            if(this.canvas_scaled != null) this.canvas = (Bitmap) this.canvas_backup.Clone();
-
-            this.canvas_scaled = null;
         }
 
-        private void btn_resize_Click(object sender, EventArgs e)
+        private void btn_load_img_Click(object sender, EventArgs e)
         {
-            resize_portrait_on_canvas(Portrait_Dimension.huge);
+            OpenFileDialog file_dialog = new OpenFileDialog();
+
+            file_dialog.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
+            file_dialog.Title = "Please select a portrait";
+
+            if(file_dialog.ShowDialog() == DialogResult.OK)
+            {
+                if(file_dialog.FileName != String.Empty)
+                {
+                    this.portrait_path = file_dialog.FileName;
+                    this.original_image = new Bitmap(portrait_path);
+
+                    /*if(canvas.Width < Portrait_Dimension.huge[0])
+                    {
+                        MessageBox.Show("Selected portrait's width must be at least "+Portrait_Dimension.huge[0].ToString()+"px!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;    
+                    }
+                    else if(canvas.Height < Portrait_Dimension.huge[1])
+                    {
+                        MessageBox.Show("Selected portrait's height must be at least "+Portrait_Dimension.huge[1].ToString()+"px!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }*/
+
+                    // Remove transparency
+                    Bitmap temp_canvas = (Bitmap) this.original_image.Clone();
+
+                    using (Graphics g = Graphics.FromImage(this.original_image))
+                    {
+                        g.Clear(Color.FromArgb(254, 254, 254));
+                        g.DrawImage(temp_canvas, 0, 0);
+                    }
+
+                    free_bitmap(ref temp_canvas);
+
+                    clear_all_buttons();
+
+                    this.picbox.Image = this.original_image;
+                    this.btn_fit_portrait.Enabled = true;
+                }
+            }
+        }
+
+        private void btn_fit_portrait_Click(object sender, EventArgs e)
+        {
+            this.original_image = ResizeImage(this.original_image, Portrait_Dimension.huge[0], Portrait_Dimension.huge[1]);
+            this.canvas = (Bitmap) this.original_image.Clone();
+
+            this.picbox.Image  = this.original_image;
+
             show_crop_section();
 
             this.btn_generate.Enabled = true;
@@ -277,8 +271,6 @@ namespace arelith_portrait_maker
 
         private void btn_generate_Click(object sender, EventArgs e)
         {
-            resize_portrait_on_canvas(Portrait_Dimension.huge);
-
             if(!Directory.Exists(output_folder)) Directory.CreateDirectory(output_folder);
 
             string portrait_name = get_file_name(this.portrait_path);
@@ -290,10 +282,10 @@ namespace arelith_portrait_maker
 
                 using (Graphics g = Graphics.FromImage(template_h))
                 {
-                    g.DrawImage(this.canvas, 
+                    g.DrawImage(this.original_image, 
                                 new Rectangle(0, 0, template_h.Width, template_h.Height - Portrait_Dimension.huge[2]), 
                                 0, 0, 
-                                this.canvas.Width, this.canvas.Height, 
+                                this.original_image.Width, this.original_image.Height, 
                                 GraphicsUnit.Pixel);
                 }
 
@@ -304,7 +296,7 @@ namespace arelith_portrait_maker
                 {
                     if (get_bitmap_from_crop_list("large") == null)
                     {
-                        this.canvas = ResizeImage(this.canvas, Portrait_Dimension.large[0], Portrait_Dimension.large[1]);
+                        this.canvas = ResizeImage(this.original_image, Portrait_Dimension.large[0], Portrait_Dimension.large[1]);
 
                         g.DrawImage(this.canvas,
                                     new Rectangle(0, 0, template_l.Width, template_l.Height - Portrait_Dimension.large[2]),
@@ -331,7 +323,7 @@ namespace arelith_portrait_maker
                 {
                     if (get_bitmap_from_crop_list("medium") == null)
                     {
-                        this.canvas = ResizeImage(this.canvas, Portrait_Dimension.medium[0], Portrait_Dimension.medium[1]);
+                        this.canvas = ResizeImage(this.original_image, Portrait_Dimension.medium[0], Portrait_Dimension.medium[1]);
 
                         g.DrawImage(this.canvas,
                                     new Rectangle(0, 0, template_m.Width, template_m.Height - Portrait_Dimension.medium[2]),
@@ -358,7 +350,7 @@ namespace arelith_portrait_maker
                 {
                     if (get_bitmap_from_crop_list("small") == null)
                     {
-                        this.canvas = ResizeImage(this.canvas, Portrait_Dimension.small[0], Portrait_Dimension.small[1]);
+                        this.canvas = ResizeImage(this.original_image, Portrait_Dimension.small[0], Portrait_Dimension.small[1]);
 
                         g.DrawImage(this.canvas,
                                     new Rectangle(0, 0, template_s.Width, template_s.Height - Portrait_Dimension.small[2]),
@@ -385,7 +377,7 @@ namespace arelith_portrait_maker
                 {
                     if (get_bitmap_from_crop_list("tiny") == null)
                     {
-                        this.canvas = ResizeImage(this.canvas, Portrait_Dimension.tiny[0], Portrait_Dimension.tiny[1]);
+                        this.canvas = ResizeImage(this.original_image, Portrait_Dimension.tiny[0], Portrait_Dimension.tiny[1]);
 
                         g.DrawImage(this.canvas,
                                     new Rectangle(0, 0, template_t.Width, template_t.Height - Portrait_Dimension.tiny[2]),
@@ -441,8 +433,8 @@ namespace arelith_portrait_maker
 
             this.crop_area_str = "large";
             this.crop_area_pos = new Point(
-                (this.canvas.Width / 2)  - (Portrait_Dimension.large[0] / 2), 
-                (this.canvas.Height / 2) - (Portrait_Dimension.large[1] / 2)
+                (this.original_image.Width  / 2) - (Portrait_Dimension.large[0] / 2), 
+                (this.original_image.Height / 2) - (Portrait_Dimension.large[1] / 2)
             );
             this.crop_area_size = new Size(Portrait_Dimension.large[0], Portrait_Dimension.large[1]);
 
@@ -471,8 +463,8 @@ namespace arelith_portrait_maker
 
             this.crop_area_str = "medium";
             this.crop_area_pos = new Point(
-                (this.canvas.Width / 2)  - (Portrait_Dimension.medium[0] / 2), 
-                (this.canvas.Height / 2) - (Portrait_Dimension.medium[1] / 2)
+                (this.original_image.Width / 2)  - (Portrait_Dimension.medium[0] / 2), 
+                (this.original_image.Height / 2) - (Portrait_Dimension.medium[1] / 2)
             );
             this.crop_area_size = new Size(Portrait_Dimension.medium[0], Portrait_Dimension.medium[1]);
 
@@ -501,8 +493,8 @@ namespace arelith_portrait_maker
 
             this.crop_area_str = "small";
             this.crop_area_pos = new Point(
-                (this.canvas.Width / 2)  - (Portrait_Dimension.small[0] / 2), 
-                (this.canvas.Height / 2) - (Portrait_Dimension.small[1] / 2)
+                (this.original_image.Width / 2)  - (Portrait_Dimension.small[0] / 2), 
+                (this.original_image.Height / 2) - (Portrait_Dimension.small[1] / 2)
             );
             this.crop_area_size = new Size(Portrait_Dimension.small[0], Portrait_Dimension.small[1]);
 
@@ -531,8 +523,8 @@ namespace arelith_portrait_maker
 
             this.crop_area_str = "tiny";
             this.crop_area_pos = new Point(
-                (this.canvas.Width / 2)  - (Portrait_Dimension.tiny[0] / 2), 
-                (this.canvas.Height / 2) - (Portrait_Dimension.tiny[1] / 2)
+                (this.original_image.Width / 2)  - (Portrait_Dimension.tiny[0] / 2), 
+                (this.original_image.Height / 2) - (Portrait_Dimension.tiny[1] / 2)
             );
             this.crop_area_size = new Size(Portrait_Dimension.tiny[0], Portrait_Dimension.tiny[1]);
 
@@ -561,9 +553,10 @@ namespace arelith_portrait_maker
             {
 
                 if(this.canvas_scaled == null)
-                    this.canvas = (Bitmap) this.canvas_backup.Clone();
+                    this.canvas = (Bitmap) this.original_image.Clone();
                 else
-                    this.canvas = this.canvas_scaled; //no need to clone, will deleted regardless
+                    this.canvas = this.canvas_scaled; //no need to clone for keeping original scaled image,
+                                                      //will deleted regardless
 
                 if(get_bitmap_from_crop_list(this.crop_area_str) != null)
                     delete_bitmap_from_crop_list(this.crop_area_str);
@@ -579,16 +572,12 @@ namespace arelith_portrait_maker
                 }
 
                 add_bitmap_to_crop_list(this.crop_area_str, cropped_area);
-
-                if(this.canvas_scaled != null)
-                {
-                    this.canvas = (Bitmap) this.canvas_backup.Clone();
-                    free_bitmap(ref this.canvas_scaled);
-                }
-
-                this.picbox.Image = this.canvas;
             }
+
+            this.canvas = (Bitmap) this.original_image.Clone();
             
+            this.picbox.Image = this.original_image;
+
             event_clipping_end();
         }
 
@@ -609,7 +598,7 @@ namespace arelith_portrait_maker
                 free_bitmap(ref this.canvas);
 
                 if(this.canvas_scaled == null)
-                    this.canvas = (Bitmap) this.canvas_backup.Clone();
+                    this.canvas = (Bitmap) this.original_image.Clone();
                 else
                     this.canvas = (Bitmap) this.canvas_scaled.Clone();
 
@@ -626,9 +615,6 @@ namespace arelith_portrait_maker
                 
                 this.crop_area_pos.X = point_x;
                 this.crop_area_pos.Y = point_y;
-
-                //this.lbl_debug.Visible = true;
-                //this.lbl_debug.Text = point_x.ToString()+","+point_y.ToString();
 
                 using (Graphics g = Graphics.FromImage(this.canvas))
                 {
@@ -655,7 +641,7 @@ namespace arelith_portrait_maker
             {
                 this.lbl_scale_val.Text = "0.0";
 
-                this.canvas = (Bitmap) this.canvas_backup.Clone();
+                this.canvas = (Bitmap) this.original_image.Clone();
 
                 using(Graphics g = Graphics.FromImage(this.canvas))
                 {
@@ -670,8 +656,8 @@ namespace arelith_portrait_maker
                 return;
             }
 
-            float scaled_img_w = this.canvas_backup.Width;
-            float scaled_img_h = this.canvas_backup.Height;
+            float scaled_img_w = this.original_image.Width;
+            float scaled_img_h = this.original_image.Height;
 
             if(slider_val > 0)
             {
@@ -686,7 +672,7 @@ namespace arelith_portrait_maker
                 scaled_img_h /= slider_val;
             }
 
-            this.canvas_scaled = ResizeImage(this.canvas_backup, (int) Math.Ceiling(scaled_img_w), (int) Math.Ceiling(scaled_img_h));
+            this.canvas_scaled = ResizeImage(this.original_image, (int) Math.Ceiling(scaled_img_w), (int) Math.Ceiling(scaled_img_h));
             this.canvas        = (Bitmap) this.canvas_scaled.Clone();
 
             using(Graphics g = Graphics.FromImage(this.canvas))
