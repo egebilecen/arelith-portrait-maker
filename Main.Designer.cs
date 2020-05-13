@@ -1,4 +1,4 @@
-﻿namespace arelith_portrait_maker
+namespace arelith_portrait_maker
 {
     partial class Main
     {
@@ -33,7 +33,7 @@
             this.picbox = new System.Windows.Forms.PictureBox();
             this.btn_load_img = new System.Windows.Forms.Button();
             this.btn_generate = new System.Windows.Forms.Button();
-            this.btn_resize = new System.Windows.Forms.Button();
+            this.btn_fit_portrait = new System.Windows.Forms.Button();
             this.btn_crop_l = new System.Windows.Forms.Button();
             this.btn_crop_m = new System.Windows.Forms.Button();
             this.btn_crop_s = new System.Windows.Forms.Button();
@@ -92,14 +92,14 @@
             // 
             // btn_resize
             // 
-            this.btn_resize.Enabled = false;
-            this.btn_resize.Location = new System.Drawing.Point(17, 89);
-            this.btn_resize.Name = "btn_resize";
-            this.btn_resize.Size = new System.Drawing.Size(130, 40);
-            this.btn_resize.TabIndex = 4;
-            this.btn_resize.Text = "Fit Portrait";
-            this.btn_resize.UseVisualStyleBackColor = true;
-            this.btn_resize.Click += new System.EventHandler(this.btn_resize_Click);
+            this.btn_fit_portrait.Enabled = false;
+            this.btn_fit_portrait.Location = new System.Drawing.Point(17, 89);
+            this.btn_fit_portrait.Name = "btn_resize";
+            this.btn_fit_portrait.Size = new System.Drawing.Size(130, 40);
+            this.btn_fit_portrait.TabIndex = 4;
+            this.btn_fit_portrait.Text = "Fit Portrait";
+            this.btn_fit_portrait.UseVisualStyleBackColor = true;
+            this.btn_fit_portrait.Click += new System.EventHandler(this.btn_fit_portrait_Click);
             // 
             // btn_crop_l
             // 
@@ -171,7 +171,7 @@
             this.slider_scale.AutoSize = false;
             this.slider_scale.LargeChange = 1;
             this.slider_scale.Location = new System.Drawing.Point(415, 274);
-            this.slider_scale.Maximum = 100;
+            this.slider_scale.Maximum = 0;
             this.slider_scale.Minimum = -100;
             this.slider_scale.Name = "slider_scale";
             this.slider_scale.Size = new System.Drawing.Size(130, 38);
@@ -215,7 +215,7 @@
             this.Controls.Add(this.btn_crop_s);
             this.Controls.Add(this.btn_crop_m);
             this.Controls.Add(this.btn_crop_l);
-            this.Controls.Add(this.btn_resize);
+            this.Controls.Add(this.btn_fit_portrait);
             this.Controls.Add(this.btn_generate);
             this.Controls.Add(this.btn_load_img);
             this.Controls.Add(this.picbox);
@@ -237,7 +237,7 @@
         private System.Windows.Forms.PictureBox picbox;
         private System.Windows.Forms.Button btn_load_img;
         private System.Windows.Forms.Button btn_generate;
-        private System.Windows.Forms.Button btn_resize;
+        private System.Windows.Forms.Button btn_fit_portrait;
         private System.Windows.Forms.Button btn_crop_l;
         private System.Windows.Forms.Button btn_crop_m;
         private System.Windows.Forms.Button btn_crop_s;
