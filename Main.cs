@@ -28,7 +28,7 @@ namespace arelith_portrait_maker
 
         private string template_folder = @".\template";
         private string output_folder   = @".\output";
-        private string output_prefix   = "zap_";
+        private string output_prefix   = "po_";
 
         public static class Portrait_Dimension
         {
@@ -45,7 +45,7 @@ namespace arelith_portrait_maker
         {
             if(!Directory.Exists(template_folder))
             {
-                MessageBox.Show("Couldn't find \""+template_folder.Replace(".\\", "")+"\" folder. Be sure to \""+template_folder.Replace(".\\", "")+"\" folder is located in the same directory with application.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Couldn't find \""+template_folder.Replace(".\\", "")+"\" folder. Be sure to \""+template_folder.Replace(".\\", "")+"\" folder is located in the same directory with application.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Environment.Exit(1);
 
                 return;
@@ -58,7 +58,7 @@ namespace arelith_portrait_maker
                 || !File.Exists(template_folder+@"\template_s.png")
                 || !File.Exists(template_folder+@"\template_t.png"))
                 {
-                    MessageBox.Show("Couldn't find template images. Be sure to \""+template_folder.Replace(".\\", "")+"\" folder contains the 5 template images.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Couldn't find template images. Be sure to \""+template_folder.Replace(".\\", "")+"\" folder contains the 5 template images.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Environment.Exit(1);
 
                     return;
@@ -229,6 +229,11 @@ namespace arelith_portrait_maker
                 {
                     this.portrait_path = file_dialog.FileName;
                     this.original_image = new Bitmap(portrait_path);
+
+                    if(get_file_name(this.portrait_path).Length > 10)
+                    {
+                        MessageBox.Show("Selected portrait's filename is exceeding 10 characters! Changing your portrait's filename to have max. 10 characters is highly suggested before continuing to using tool.", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
 
                     /*if(canvas.Width < Portrait_Dimension.huge[0])
                     {
@@ -409,7 +414,7 @@ namespace arelith_portrait_maker
 
                 clear_all_buttons();
 
-                MessageBox.Show("Portraits are successfully generated. Please check \""+output_folder.Replace(".\\", "")+"\" folder.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Portraits are successfully generated. Please check \""+output_folder.Replace(".\\", "")+"\" folder.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 Process.Start(output_folder);
 
@@ -417,7 +422,7 @@ namespace arelith_portrait_maker
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occured while generating portraits. (Exception: "+ex.Message+")", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("An error occured while generating portraits. (Exception: "+ex.Message+")", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             clear_all_buttons();
@@ -429,7 +434,7 @@ namespace arelith_portrait_maker
         {
             if(this.is_cropping)
             {
-                MessageBox.Show("Please end your current cropping before starting new one.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please end your current cropping before starting new one.", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -459,7 +464,7 @@ namespace arelith_portrait_maker
         {
             if(this.is_cropping)
             {
-                MessageBox.Show("Please end your current cropping before starting new one.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please end your current cropping before starting new one.", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             
@@ -489,7 +494,7 @@ namespace arelith_portrait_maker
         {
             if(this.is_cropping)
             {
-                MessageBox.Show("Please end your current cropping before starting new one.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please end your current cropping before starting new one.", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             
@@ -519,7 +524,7 @@ namespace arelith_portrait_maker
         {
             if(this.is_cropping)
             {
-                MessageBox.Show("Please end your current cropping before starting new one.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please end your current cropping before starting new one.", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             
@@ -547,7 +552,7 @@ namespace arelith_portrait_maker
 
         private void btn_end_crop_Click(object sender, EventArgs e)
         {
-            DialogResult dialog_res = MessageBox.Show("Do you want to end the cropping?", "Info", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information);
+            DialogResult dialog_res = MessageBox.Show("Do you want to end the cropping?", "", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information);
 
             if(dialog_res == DialogResult.No) return;
 
