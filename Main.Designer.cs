@@ -90,11 +90,11 @@ namespace arelith_portrait_maker
             this.btn_generate.UseVisualStyleBackColor = true;
             this.btn_generate.Click += new System.EventHandler(this.btn_generate_Click);
             // 
-            // btn_resize
+            // btn_fit_portrait
             // 
             this.btn_fit_portrait.Enabled = false;
             this.btn_fit_portrait.Location = new System.Drawing.Point(17, 89);
-            this.btn_fit_portrait.Name = "btn_resize";
+            this.btn_fit_portrait.Name = "btn_fit_portrait";
             this.btn_fit_portrait.Size = new System.Drawing.Size(130, 40);
             this.btn_fit_portrait.TabIndex = 4;
             this.btn_fit_portrait.Text = "Fit Portrait";
@@ -220,7 +220,9 @@ namespace arelith_portrait_maker
             this.Controls.Add(this.btn_load_img);
             this.Controls.Add(this.picbox);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "Main";
             this.Text = "Arelith Portrait Maker";
             this.TransparencyKey = System.Drawing.Color.White;
