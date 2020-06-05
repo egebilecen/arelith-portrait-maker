@@ -43,6 +43,9 @@ namespace arelith_portrait_maker
             this.slider_scale = new System.Windows.Forms.TrackBar();
             this.lbl_scale = new System.Windows.Forms.Label();
             this.lbl_scale_val = new System.Windows.Forms.Label();
+            this.lbl_step_size = new System.Windows.Forms.Label();
+            this.input_stepsize = new System.Windows.Forms.TextBox();
+            this.lbl_step_size_info = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picbox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.slider_scale)).BeginInit();
             this.SuspendLayout();
@@ -201,11 +204,47 @@ namespace arelith_portrait_maker
             this.lbl_scale_val.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.lbl_scale_val.Visible = false;
             // 
+            // lbl_step_size
+            // 
+            this.lbl_step_size.Location = new System.Drawing.Point(412, 348);
+            this.lbl_step_size.Name = "lbl_step_size";
+            this.lbl_step_size.Size = new System.Drawing.Size(141, 17);
+            this.lbl_step_size.TabIndex = 13;
+            this.lbl_step_size.Text = "Crop Area Step Size:";
+            this.lbl_step_size.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbl_step_size.Visible = false;
+            // 
+            // input_stepsize
+            // 
+            this.input_stepsize.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(254)))), ((int)(((byte)(254)))));
+            this.input_stepsize.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.input_stepsize.Location = new System.Drawing.Point(457, 368);
+            this.input_stepsize.Name = "input_stepsize";
+            this.input_stepsize.Size = new System.Drawing.Size(41, 22);
+            this.input_stepsize.TabIndex = 14;
+            this.input_stepsize.Text = "5";
+            this.input_stepsize.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.input_stepsize.Visible = false;
+            // 
+            // lbl_step_size_info
+            // 
+            this.lbl_step_size_info.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lbl_step_size_info.Location = new System.Drawing.Point(412, 393);
+            this.lbl_step_size_info.Name = "lbl_step_size_info";
+            this.lbl_step_size_info.Size = new System.Drawing.Size(141, 17);
+            this.lbl_step_size_info.TabIndex = 15;
+            this.lbl_step_size_info.Text = "(Press ENTER)";
+            this.lbl_step_size_info.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbl_step_size_info.Visible = false;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(558, 472);
+            this.Controls.Add(this.lbl_step_size_info);
+            this.Controls.Add(this.input_stepsize);
+            this.Controls.Add(this.lbl_step_size);
             this.Controls.Add(this.lbl_scale_val);
             this.Controls.Add(this.lbl_scale);
             this.Controls.Add(this.slider_scale);
@@ -226,6 +265,7 @@ namespace arelith_portrait_maker
             this.Name = "Main";
             this.Text = "Arelith Portrait Maker";
             this.TransparencyKey = System.Drawing.Color.White;
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Main_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.picbox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.slider_scale)).EndInit();
             this.ResumeLayout(false);
@@ -249,6 +289,8 @@ namespace arelith_portrait_maker
         private System.Windows.Forms.TrackBar slider_scale;
         private System.Windows.Forms.Label lbl_scale;
         private System.Windows.Forms.Label lbl_scale_val;
+        private System.Windows.Forms.Label lbl_step_size;
+        private System.Windows.Forms.TextBox input_stepsize;
+        private System.Windows.Forms.Label lbl_step_size_info;
     }
 }
-
