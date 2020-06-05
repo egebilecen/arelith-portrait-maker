@@ -17,7 +17,8 @@ namespace arelith_portrait_maker
         private string crop_area_str;
         private Point  crop_area_pos;
         private Size   crop_area_size;
-        private Color  crop_border_color = Color.FromArgb(254, 254, 254);
+        private Color  crop_border_color = Color.FromArgb(0, 255, 0);
+        private int    crop_area_step_size = 5;
 
         private string portrait_path;
         private Bitmap original_image; // will always hold original RESIZED image
@@ -65,7 +66,11 @@ namespace arelith_portrait_maker
                 }
             }
 
+            // INIT
+            this.KeyPreview = true;
             InitializeComponent();
+
+            this.crop_area_step_size = Int32.Parse(this.input_stepsize.Text);
         }
 
         //https://stackoverflow.com/questions/1922040/how-to-resize-an-image-c-sharp
@@ -157,6 +162,8 @@ namespace arelith_portrait_maker
             this.btn_crop_m.Visible = false;
             this.btn_crop_s.Visible = false;
             this.btn_crop_t.Visible = false;
+
+            hide_scale_section();
         }
 
         private void show_scale_section()
@@ -171,6 +178,20 @@ namespace arelith_portrait_maker
             this.slider_scale.Visible  = false;
             this.lbl_scale.Visible     = false;
             this.lbl_scale_val.Visible = false;
+        }
+
+        private void show_crop_step_size_section()
+        {
+            this.lbl_step_size.Visible  = true;
+            this.input_stepsize.Visible = true;
+            this.lbl_step_size_info.Visible = true;
+        }
+
+        private void hide_crop_step_size_section()
+        {
+            this.lbl_step_size.Visible  = false;
+            this.input_stepsize.Visible = false;
+            this.lbl_step_size_info.Visible = false;
         }
 
         private void clear_all_buttons()
@@ -201,6 +222,7 @@ namespace arelith_portrait_maker
             this.btn_end_crop.Visible = true;
 
             show_scale_section();
+            show_crop_step_size_section();
         }
 
         private void event_clipping_end()
@@ -211,6 +233,7 @@ namespace arelith_portrait_maker
             this.btn_end_crop.Visible = false;
 
             hide_scale_section();
+            hide_crop_step_size_section();
 
             this.lbl_scale_val.Text = "0.0";
             this.slider_scale.Value = 0;
@@ -227,7 +250,7 @@ namespace arelith_portrait_maker
             {
                 if(file_dialog.FileName != String.Empty)
                 {
-                    this.portrait_path = file_dialog.FileName;
+                    this.portrait_path  = file_dialog.FileName;
                     this.original_image = new Bitmap(portrait_path);
 
                     if(get_file_name(this.portrait_path).Length > 10)
@@ -282,7 +305,7 @@ namespace arelith_portrait_maker
         {
             if(!Directory.Exists(output_folder)) Directory.CreateDirectory(output_folder);
 
-            string portrait_name = get_file_name(this.portrait_path);
+            string portrait_name = get_file_name(this.portrait_path).ToLower();
 
             try
             {
@@ -695,6 +718,63 @@ namespace arelith_portrait_maker
             }
 
             this.picbox.Image = this.canvas;
+        }
+
+        private void Main_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(this.is_cropping && !this.is_mouse_down)
+            {
+                free_bitmap(ref this.canvas);
+
+                if(this.canvas_scaled == null)
+                    this.canvas = (Bitmap) this.original_image.Clone();
+                else
+                    this.canvas = (Bitmap) this.canvas_scaled.Clone();
+
+                switch(e.KeyCode)
+                {
+                    case Keys.W:
+                        this.crop_area_pos.Y -= crop_area_step_size;
+                    break;
+
+                    case Keys.S:
+                        this.crop_area_pos.Y += crop_area_step_size;
+                    break;
+
+                    case Keys.A:
+                        this.crop_area_pos.X -= crop_area_step_size;
+                    break;
+
+                    case Keys.D:
+                        this.crop_area_pos.X += crop_area_step_size;
+                    break;
+
+                    case Keys.Enter:
+                        if(this.input_stepsize.ContainsFocus)
+                        {
+                            try
+                            {
+                                this.ActiveControl = null;
+                                this.crop_area_step_size = Int32.Parse(this.input_stepsize.Text);
+                            }
+                            catch(Exception)
+                            {
+                                this.input_stepsize.Text = this.crop_area_step_size.ToString();
+                            }
+                        }
+                    break;
+                }
+
+                using (Graphics g = Graphics.FromImage(this.canvas))
+                {
+                    g.DrawRectangle(new Pen(crop_border_color, 2), new Rectangle(
+                        this.crop_area_pos,
+                        this.crop_area_size
+                    ));
+                }
+
+                this.picbox.Image = this.canvas;
+            }
         }
     }
 }
