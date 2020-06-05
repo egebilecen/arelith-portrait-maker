@@ -734,19 +734,31 @@ namespace arelith_portrait_maker
                 switch(e.KeyCode)
                 {
                     case Keys.W:
-                        this.crop_area_pos.Y -= crop_area_step_size;
+                        if(this.crop_area_pos.Y - crop_area_step_size >= 0)
+                            this.crop_area_pos.Y -= crop_area_step_size;
+                        else
+                            this.crop_area_pos.Y = 0;
                     break;
 
                     case Keys.S:
-                        this.crop_area_pos.Y += crop_area_step_size;
+                        if(this.crop_area_pos.Y + crop_area_step_size <= (this.canvas.Height - this.crop_area_size.Height))
+                            this.crop_area_pos.Y += crop_area_step_size;
+                        else
+                            this.crop_area_pos.Y = this.canvas.Height - this.crop_area_size.Height;
                     break;
 
                     case Keys.A:
-                        this.crop_area_pos.X -= crop_area_step_size;
+                        if(this.crop_area_pos.X - crop_area_step_size >= 0)
+                            this.crop_area_pos.X -= crop_area_step_size;
+                        else
+                            this.crop_area_pos.X = 0;
                     break;
 
                     case Keys.D:
-                        this.crop_area_pos.X += crop_area_step_size;
+                        if(this.crop_area_pos.X + crop_area_step_size <= (this.canvas.Width - this.crop_area_size.Width))
+                            this.crop_area_pos.X += crop_area_step_size;
+                        else
+                            this.crop_area_pos.X = this.canvas.Width - this.crop_area_size.Width;
                     break;
 
                     case Keys.Enter:
