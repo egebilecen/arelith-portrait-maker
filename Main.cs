@@ -196,7 +196,7 @@ namespace arelith_portrait_maker
 
         private void clear_all_buttons()
         {
-            this.picbox.Image = null;
+            this.picbox.BackgroundImage = null;
             this.btn_fit_portrait.Enabled = false;
             this.btn_generate.Enabled = false;
             this.btn_end_crop.Visible = false;
@@ -281,8 +281,9 @@ namespace arelith_portrait_maker
                     free_bitmap(ref temp_canvas);
 
                     clear_all_buttons();
-
-                    this.picbox.Image = this.original_image;
+                    btn_fit_portrait_Click(sender, null);
+                    
+                    this.picbox.BackgroundImage = this.original_image;
                     this.btn_fit_portrait.Enabled = true;
                 }
             }
@@ -293,7 +294,7 @@ namespace arelith_portrait_maker
             this.original_image = ResizeImage(this.original_image, Portrait_Dimension.huge[0], Portrait_Dimension.huge[1]);
             this.canvas = (Bitmap) this.original_image.Clone();
 
-            this.picbox.Image  = this.original_image;
+            this.picbox.BackgroundImage  = this.original_image;
 
             show_crop_section();
 
@@ -478,7 +479,7 @@ namespace arelith_portrait_maker
                 ));
             }
 
-            this.picbox.Image = this.canvas;
+            this.picbox.BackgroundImage = this.canvas;
 
             this.is_cropping = true;
         }
@@ -508,7 +509,7 @@ namespace arelith_portrait_maker
                 ));
             }
 
-            this.picbox.Image = this.canvas;
+            this.picbox.BackgroundImage = this.canvas;
 
             this.is_cropping = true;
         }
@@ -538,7 +539,7 @@ namespace arelith_portrait_maker
                 ));
             }
 
-            this.picbox.Image = this.canvas;
+            this.picbox.BackgroundImage = this.canvas;
 
             this.is_cropping = true;
         }
@@ -568,7 +569,7 @@ namespace arelith_portrait_maker
                 ));
             }
 
-            this.picbox.Image = this.canvas;
+            this.picbox.BackgroundImage = this.canvas;
 
             this.is_cropping = true;
         }
@@ -610,7 +611,7 @@ namespace arelith_portrait_maker
 
             this.canvas = (Bitmap) this.original_image.Clone();
             
-            this.picbox.Image = this.original_image;
+            this.picbox.BackgroundImage = this.original_image;
 
             event_clipping_end();
         }
@@ -640,12 +641,16 @@ namespace arelith_portrait_maker
                 int point_y = 0;
 
                 if(e.Location.X - (this.crop_area_size.Width / 2) < 0) point_x = 0;
-                else if(e.Location.X + (this.crop_area_size.Width / 2) > this.canvas.Width) point_x = this.canvas.Width - this.crop_area_size.Width;
-                else point_x = e.Location.X - (this.crop_area_size.Width / 2);
+                else if(e.Location.X + (this.crop_area_size.Width / 2) > this.canvas.Width) 
+                    point_x = this.canvas.Width - this.crop_area_size.Width;
+                else 
+                    point_x = e.Location.X - (this.crop_area_size.Width / 2);
 
                 if(e.Location.Y - (this.crop_area_size.Height / 2) < 0) point_y = 0;
-                else if(e.Location.Y + (this.crop_area_size.Height / 2) > this.canvas.Height) point_y = this.canvas.Height - this.crop_area_size.Height;
-                else point_y = e.Location.Y - (this.crop_area_size.Height / 2);
+                else if(e.Location.Y + (this.crop_area_size.Height / 2) > this.canvas.Height) 
+                    point_y = this.canvas.Height - this.crop_area_size.Height;
+                else 
+                    point_y = e.Location.Y - (this.crop_area_size.Height / 2);
                 
                 this.crop_area_pos.X = point_x;
                 this.crop_area_pos.Y = point_y;
@@ -658,7 +663,7 @@ namespace arelith_portrait_maker
                     ));
                 }
 
-                this.picbox.Image = this.canvas;
+                this.picbox.BackgroundImage = this.canvas;
             }
         }
 
@@ -685,7 +690,7 @@ namespace arelith_portrait_maker
                     ));
                 }
 
-                this.picbox.Image = this.canvas;
+                this.picbox.BackgroundImage = this.canvas;
 
                 return;
             }
@@ -717,7 +722,7 @@ namespace arelith_portrait_maker
                 ));
             }
 
-            this.picbox.Image = this.canvas;
+            this.picbox.BackgroundImage = this.canvas;
         }
 
         private void Main_KeyDown(object sender, KeyEventArgs e)
@@ -785,7 +790,7 @@ namespace arelith_portrait_maker
                     ));
                 }
 
-                this.picbox.Image = this.canvas;
+                this.picbox.BackgroundImage = this.canvas;
             }
         }
     }
