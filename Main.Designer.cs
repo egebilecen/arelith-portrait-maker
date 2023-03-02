@@ -53,19 +53,22 @@ namespace arelith_portrait_maker
             // label1
             // 
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(11, 7);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(522, 31);
+            this.label1.Size = new System.Drawing.Size(396, 25);
             this.label1.TabIndex = 0;
             this.label1.Text = "Arelith Portrait Maker by Zaphiel";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // picbox
             // 
+            this.picbox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.picbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picbox.Location = new System.Drawing.Point(153, 43);
+            this.picbox.Location = new System.Drawing.Point(115, 35);
+            this.picbox.Margin = new System.Windows.Forms.Padding(2);
             this.picbox.Name = "picbox";
-            this.picbox.Size = new System.Drawing.Size(256, 400);
+            this.picbox.Size = new System.Drawing.Size(192, 325);
             this.picbox.TabIndex = 1;
             this.picbox.TabStop = false;
             this.picbox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picbox_MouseDown);
@@ -74,9 +77,10 @@ namespace arelith_portrait_maker
             // 
             // btn_load_img
             // 
-            this.btn_load_img.Location = new System.Drawing.Point(17, 43);
+            this.btn_load_img.Location = new System.Drawing.Point(13, 35);
+            this.btn_load_img.Margin = new System.Windows.Forms.Padding(2);
             this.btn_load_img.Name = "btn_load_img";
-            this.btn_load_img.Size = new System.Drawing.Size(130, 40);
+            this.btn_load_img.Size = new System.Drawing.Size(98, 32);
             this.btn_load_img.TabIndex = 2;
             this.btn_load_img.Text = "Load Image";
             this.btn_load_img.UseVisualStyleBackColor = true;
@@ -85,9 +89,10 @@ namespace arelith_portrait_maker
             // btn_generate
             // 
             this.btn_generate.Enabled = false;
-            this.btn_generate.Location = new System.Drawing.Point(17, 135);
+            this.btn_generate.Location = new System.Drawing.Point(13, 72);
+            this.btn_generate.Margin = new System.Windows.Forms.Padding(2);
             this.btn_generate.Name = "btn_generate";
-            this.btn_generate.Size = new System.Drawing.Size(130, 40);
+            this.btn_generate.Size = new System.Drawing.Size(98, 32);
             this.btn_generate.TabIndex = 3;
             this.btn_generate.Text = "Generate";
             this.btn_generate.UseVisualStyleBackColor = true;
@@ -96,19 +101,22 @@ namespace arelith_portrait_maker
             // btn_fit_portrait
             // 
             this.btn_fit_portrait.Enabled = false;
-            this.btn_fit_portrait.Location = new System.Drawing.Point(17, 89);
+            this.btn_fit_portrait.Location = new System.Drawing.Point(13, 110);
+            this.btn_fit_portrait.Margin = new System.Windows.Forms.Padding(2);
             this.btn_fit_portrait.Name = "btn_fit_portrait";
-            this.btn_fit_portrait.Size = new System.Drawing.Size(130, 40);
+            this.btn_fit_portrait.Size = new System.Drawing.Size(98, 32);
             this.btn_fit_portrait.TabIndex = 4;
             this.btn_fit_portrait.Text = "Fit Portrait";
             this.btn_fit_portrait.UseVisualStyleBackColor = true;
+            this.btn_fit_portrait.Visible = false;
             this.btn_fit_portrait.Click += new System.EventHandler(this.btn_fit_portrait_Click);
             // 
             // btn_crop_l
             // 
-            this.btn_crop_l.Location = new System.Drawing.Point(415, 43);
+            this.btn_crop_l.Location = new System.Drawing.Point(311, 35);
+            this.btn_crop_l.Margin = new System.Windows.Forms.Padding(2);
             this.btn_crop_l.Name = "btn_crop_l";
-            this.btn_crop_l.Size = new System.Drawing.Size(130, 40);
+            this.btn_crop_l.Size = new System.Drawing.Size(98, 32);
             this.btn_crop_l.TabIndex = 5;
             this.btn_crop_l.Text = "Crop (L)";
             this.btn_crop_l.UseVisualStyleBackColor = true;
@@ -117,9 +125,10 @@ namespace arelith_portrait_maker
             // 
             // btn_crop_m
             // 
-            this.btn_crop_m.Location = new System.Drawing.Point(415, 89);
+            this.btn_crop_m.Location = new System.Drawing.Point(311, 72);
+            this.btn_crop_m.Margin = new System.Windows.Forms.Padding(2);
             this.btn_crop_m.Name = "btn_crop_m";
-            this.btn_crop_m.Size = new System.Drawing.Size(130, 40);
+            this.btn_crop_m.Size = new System.Drawing.Size(98, 32);
             this.btn_crop_m.TabIndex = 6;
             this.btn_crop_m.Text = "Crop (M)";
             this.btn_crop_m.UseVisualStyleBackColor = true;
@@ -128,9 +137,10 @@ namespace arelith_portrait_maker
             // 
             // btn_crop_s
             // 
-            this.btn_crop_s.Location = new System.Drawing.Point(415, 135);
+            this.btn_crop_s.Location = new System.Drawing.Point(311, 110);
+            this.btn_crop_s.Margin = new System.Windows.Forms.Padding(2);
             this.btn_crop_s.Name = "btn_crop_s";
-            this.btn_crop_s.Size = new System.Drawing.Size(130, 40);
+            this.btn_crop_s.Size = new System.Drawing.Size(98, 32);
             this.btn_crop_s.TabIndex = 7;
             this.btn_crop_s.Text = "Crop (S)";
             this.btn_crop_s.UseVisualStyleBackColor = true;
@@ -139,9 +149,10 @@ namespace arelith_portrait_maker
             // 
             // btn_crop_t
             // 
-            this.btn_crop_t.Location = new System.Drawing.Point(415, 181);
+            this.btn_crop_t.Location = new System.Drawing.Point(311, 147);
+            this.btn_crop_t.Margin = new System.Windows.Forms.Padding(2);
             this.btn_crop_t.Name = "btn_crop_t";
-            this.btn_crop_t.Size = new System.Drawing.Size(130, 40);
+            this.btn_crop_t.Size = new System.Drawing.Size(98, 32);
             this.btn_crop_t.TabIndex = 8;
             this.btn_crop_t.Text = "Crop (T)";
             this.btn_crop_t.UseVisualStyleBackColor = true;
@@ -150,9 +161,10 @@ namespace arelith_portrait_maker
             // 
             // btn_end_crop
             // 
-            this.btn_end_crop.Location = new System.Drawing.Point(415, 227);
+            this.btn_end_crop.Location = new System.Drawing.Point(311, 184);
+            this.btn_end_crop.Margin = new System.Windows.Forms.Padding(2);
             this.btn_end_crop.Name = "btn_end_crop";
-            this.btn_end_crop.Size = new System.Drawing.Size(130, 40);
+            this.btn_end_crop.Size = new System.Drawing.Size(98, 32);
             this.btn_end_crop.TabIndex = 9;
             this.btn_end_crop.Text = "End Cropping";
             this.btn_end_crop.UseVisualStyleBackColor = true;
@@ -161,9 +173,10 @@ namespace arelith_portrait_maker
             // 
             // lbl_debug
             // 
-            this.lbl_debug.Location = new System.Drawing.Point(17, 446);
+            this.lbl_debug.Location = new System.Drawing.Point(13, 362);
+            this.lbl_debug.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_debug.Name = "lbl_debug";
-            this.lbl_debug.Size = new System.Drawing.Size(529, 17);
+            this.lbl_debug.Size = new System.Drawing.Size(397, 14);
             this.lbl_debug.TabIndex = 10;
             this.lbl_debug.Text = "Debug label";
             this.lbl_debug.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -173,11 +186,12 @@ namespace arelith_portrait_maker
             // 
             this.slider_scale.AutoSize = false;
             this.slider_scale.LargeChange = 1;
-            this.slider_scale.Location = new System.Drawing.Point(415, 274);
+            this.slider_scale.Location = new System.Drawing.Point(311, 223);
+            this.slider_scale.Margin = new System.Windows.Forms.Padding(2);
             this.slider_scale.Maximum = 0;
             this.slider_scale.Minimum = -100;
             this.slider_scale.Name = "slider_scale";
-            this.slider_scale.Size = new System.Drawing.Size(130, 38);
+            this.slider_scale.Size = new System.Drawing.Size(98, 31);
             this.slider_scale.TabIndex = 11;
             this.slider_scale.Visible = false;
             this.slider_scale.Scroll += new System.EventHandler(this.slider_scale_Scroll);
@@ -185,9 +199,10 @@ namespace arelith_portrait_maker
             // lbl_scale
             // 
             this.lbl_scale.BackColor = System.Drawing.Color.Transparent;
-            this.lbl_scale.Location = new System.Drawing.Point(441, 315);
+            this.lbl_scale.Location = new System.Drawing.Point(331, 256);
+            this.lbl_scale.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_scale.Name = "lbl_scale";
-            this.lbl_scale.Size = new System.Drawing.Size(47, 23);
+            this.lbl_scale.Size = new System.Drawing.Size(35, 19);
             this.lbl_scale.TabIndex = 12;
             this.lbl_scale.Text = "Scale:";
             this.lbl_scale.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -196,9 +211,10 @@ namespace arelith_portrait_maker
             // lbl_scale_val
             // 
             this.lbl_scale_val.AutoSize = true;
-            this.lbl_scale_val.Location = new System.Drawing.Point(484, 315);
+            this.lbl_scale_val.Location = new System.Drawing.Point(363, 256);
+            this.lbl_scale_val.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_scale_val.Name = "lbl_scale_val";
-            this.lbl_scale_val.Size = new System.Drawing.Size(28, 17);
+            this.lbl_scale_val.Size = new System.Drawing.Size(22, 13);
             this.lbl_scale_val.TabIndex = 11;
             this.lbl_scale_val.Text = "0.0";
             this.lbl_scale_val.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -206,9 +222,10 @@ namespace arelith_portrait_maker
             // 
             // lbl_step_size
             // 
-            this.lbl_step_size.Location = new System.Drawing.Point(412, 348);
+            this.lbl_step_size.Location = new System.Drawing.Point(309, 283);
+            this.lbl_step_size.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_step_size.Name = "lbl_step_size";
-            this.lbl_step_size.Size = new System.Drawing.Size(141, 17);
+            this.lbl_step_size.Size = new System.Drawing.Size(106, 14);
             this.lbl_step_size.TabIndex = 13;
             this.lbl_step_size.Text = "Crop Area Step Size:";
             this.lbl_step_size.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -218,9 +235,10 @@ namespace arelith_portrait_maker
             // 
             this.input_stepsize.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(254)))), ((int)(((byte)(254)))));
             this.input_stepsize.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.input_stepsize.Location = new System.Drawing.Point(457, 368);
+            this.input_stepsize.Location = new System.Drawing.Point(343, 299);
+            this.input_stepsize.Margin = new System.Windows.Forms.Padding(2);
             this.input_stepsize.Name = "input_stepsize";
-            this.input_stepsize.Size = new System.Drawing.Size(41, 22);
+            this.input_stepsize.Size = new System.Drawing.Size(31, 20);
             this.input_stepsize.TabIndex = 14;
             this.input_stepsize.Text = "5";
             this.input_stepsize.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -229,9 +247,10 @@ namespace arelith_portrait_maker
             // lbl_step_size_info
             // 
             this.lbl_step_size_info.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lbl_step_size_info.Location = new System.Drawing.Point(412, 393);
+            this.lbl_step_size_info.Location = new System.Drawing.Point(309, 319);
+            this.lbl_step_size_info.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_step_size_info.Name = "lbl_step_size_info";
-            this.lbl_step_size_info.Size = new System.Drawing.Size(141, 17);
+            this.lbl_step_size_info.Size = new System.Drawing.Size(106, 14);
             this.lbl_step_size_info.TabIndex = 15;
             this.lbl_step_size_info.Text = "(Press ENTER)";
             this.lbl_step_size_info.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -239,9 +258,9 @@ namespace arelith_portrait_maker
             // 
             // Main
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(558, 472);
+            this.ClientSize = new System.Drawing.Size(418, 384);
             this.Controls.Add(this.lbl_step_size_info);
             this.Controls.Add(this.input_stepsize);
             this.Controls.Add(this.lbl_step_size);
@@ -261,6 +280,7 @@ namespace arelith_portrait_maker
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.Name = "Main";
             this.Text = "Arelith Portrait Maker";
@@ -294,3 +314,4 @@ namespace arelith_portrait_maker
         private System.Windows.Forms.Label lbl_step_size_info;
     }
 }
+
