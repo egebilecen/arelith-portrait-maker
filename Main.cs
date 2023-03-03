@@ -150,6 +150,7 @@ namespace arelith_portrait_maker
 
         private void show_crop_section()
         {
+            return;
             this.btn_crop_l.Visible = true;
             this.btn_crop_m.Visible = true;
             this.btn_crop_s.Visible = true;
